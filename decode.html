@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Message Decoder</h1>
+		<p>This URL contains a securely encrypted message</p>
+		<p>Are you ready to enter the pass phrase?</p>
+    <button id="decrypt">Decrypt</button>
+
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+    <script>
+
+			$('#decrypt').on('click', function() {
+				decoder.reveal();				
+			});
+			
+			var decoder = {
+				getCypher: function() {
+					this.cypher = window.location.pathname.replace('/decode.html/', '');
+				},
+				getPassword: function() {
+					this.password = prompt("What is the secret code?");
+				},
+				decrypt: function() {
+					message = CryptoJS.AES.decrypt(this.cypher, this.password).toString(CryptoJS.enc.Utf8)
+					console.log('Attempting to decrypt...')
+					alert(message)
+				},
+				reveal: function() {
+					this.getCypher()
+					this.getPassword()
+					this.decrypt()
+				}
+			}			
+    </script>
+  </body>
+</html>
